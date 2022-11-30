@@ -32,7 +32,7 @@ public abstract class KMajorityClassifierBase implements IClassifier {
             classifications[i] = closestDistanceEntries[i].getClassification();
         }
 
-        return getMostPopularValue(classifications);
+        return getMostPopularValue(classifications, closestDistanceEntries, closestDistances);
     }
 
     private void checkClosest(CSVEntry[] closestDistanceEntries, double[] closestDistances, CSVEntry newEntry, double newDistance) {
@@ -55,7 +55,7 @@ public abstract class KMajorityClassifierBase implements IClassifier {
 
     }
 
-    private int getMostPopularValue(int[] array) {
+    private int getMostPopularValue(int[] array, CSVEntry[] closestDistanceEntries, double[] closestDistances) {
         int count = 1;
         int tempCount = 0;
         int mostPopular = array[0];
@@ -73,6 +73,21 @@ public abstract class KMajorityClassifierBase implements IClassifier {
                 count = tempCount;
             }
         }
+
+        //no majority found! -> return closest
+        if(count == 1) {
+            System.out.println("no majority");
+            double closestDistance = closestDistances[0];
+            CSVEntry closestEntry = closestDistanceEntries[0];
+            for(int i = 0; i < closestDistances.length; i++) {
+                if(closestDistance > closestDistances[i]) {
+                    closestDistance = closestDistances[i];
+                    closestEntry = closestDistanceEntries[i];
+                }
+            }
+            mostPopular = closestEntry.getClassification();
+        }
+
         return mostPopular;
     }
 
