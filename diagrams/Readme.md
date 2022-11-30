@@ -1,0 +1,8 @@
+![berechnungsdauer_manhattan_k1](https://user-images.githubusercontent.com/19912335/204930343-15adda80-58f6-4f6a-9737-9f268ea88113.png)
+![berechnungsdauer_manhattan_k1_smoothed](https://user-images.githubusercontent.com/19912335/204930345-34d60b39-10b5-478f-803d-5d65c3dc3aca.png)
+![klassifikationsgenauigkeit_euclidean_k1](https://user-images.githubusercontent.com/19912335/204930353-9a5e54f1-b878-4acb-95db-0d62ff06d5f6.png)
+![klassifikationsgenauigkeit_euclidean_k1_3_9](https://user-images.githubusercontent.com/19912335/204930357-98483a20-316c-4f4f-b7d7-3b69bcd4180e.png)
+![klassifikationsgenauigkeit_euclidean_k1_3_9_blocks](https://user-images.githubusercontent.com/19912335/204930358-412b9d40-4f09-49bc-bebd-d13ab262a019.png)
+![klassifikationsgenauigkeit_euclidean_k1_3_9_smoothed](https://user-images.githubusercontent.com/19912335/204930361-be72b4b7-2286-4044-98e3-b836e8a46168.png)
+![klassifikationsgenauigkeit_euclidean_k1_smoothed](https://user-images.githubusercontent.com/19912335/204930363-43388ab0-4bdf-468e-a02e-69d6f86734a6.png)
+![klassifikationsgenauigkeit_manhattan_k1](https://user-images.githubusercontent.com/19912335/204930365-3e4671d7-729c-4bd0-a38f-c25d006b52a1.png)
