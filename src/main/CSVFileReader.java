@@ -1,3 +1,7 @@
+package main;
+
+import main.CSVEntry;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -24,11 +28,11 @@ public class CSVFileReader {
 
             while((currentLine = bufferedReader.readLine()) != null && maxLines > linesRead) {
                 tmpArray = currentLine.split(LINE_SEPERATOR);
-                float[] datapoints = new float[dimensions];
+                double[] datapoints = new double[dimensions];
                 int classification = Integer.parseInt(tmpArray[tmpArray.length-1]);
 
                 for(int i = 0; i < (tmpArray.length-1); i++) {
-                    datapoints[i] = Float.parseFloat(tmpArray[i]);
+                    datapoints[i] = Double.parseDouble(tmpArray[i]);
                 }
 
                 csvEntries[linesRead] = new CSVEntry(datapoints, classification);

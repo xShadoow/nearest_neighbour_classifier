@@ -1,14 +1,16 @@
+package main;
+
 public class CSVEntry {
 
-    private final float[] datapoints;
+    private final double[] datapoints;
     private final int classification;
 
-    public CSVEntry(float[] datapoints, int classification) {
+    public CSVEntry(double[] datapoints, int classification) {
         this.datapoints = datapoints;
         this.classification = classification;
     }
 
-    public float[] getDatapoints() {
+    public double[] getDatapoints() {
         return this.datapoints;
     }
 
