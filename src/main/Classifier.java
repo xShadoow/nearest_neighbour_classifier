@@ -19,6 +19,8 @@ public class Classifier {
         int correctlyClassified = 0;
         final CSVEntry[] trainEntries = new CSVEntry[this.allEntries.length-1];
         CSVEntry testEntry;
+        int progressModulo = this.allEntries.length/20;
+        int progress = 0;
 
         for(int i = 0; i < this.allEntries.length; i++) {
 
@@ -29,6 +31,11 @@ public class Classifier {
 
             if(classifiedAs == testEntry.getClassification()) {
                 correctlyClassified++;
+            }
+
+            if(i % progressModulo == 0) {
+                System.out.println("Progress: " + progress + "%");
+                progress += 5;
             }
 
         }
