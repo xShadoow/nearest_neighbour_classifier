@@ -1,46 +1,82 @@
 package main;
 
-import main.classifier.EuclideanClassifier;
-import main.classifier.KMajorityEuclideanClassifier;
-import main.classifier.KMajorityManhattanClassifier;
-import main.classifier.ManhattanClassifier;
+import main.classifier.*;
 
 public class Main {
     public static void main(String[] args) {
-        new Main();
+        new Main(args);
     }
 
-    public Main() {
-        //String filePath = "C://Users//sandr//Downloads//agk-ue08-p1.csv"; //dim: 2
-        //String filePath = "C://Users//sandr//Downloads//iris.csv"; //dim 4:
-        String filePath = "C://Users//sandr//Downloads//mnist.csv"; //dim: 784
-        final CSVEntry[] csvEntries = CSVFileReader.readCSVFile(filePath, 10240, 784);
+    public Main(String[] args) {
+
+        ProgramArgs programArgs = readProgramArgs(args);
+
+        if(programArgs == null) {
+            return;
+        }
+
+        final CSVEntry[] csvEntries = CSVFileReader.readCSVFile(programArgs);
 
         long startTime = System.currentTimeMillis();
-        Classifier euclideanClassifier = new Classifier(csvEntries, new ManhattanClassifier());
-        euclideanClassifier.runClassifier();
-        long endTime = System.currentTimeMillis();
-        System.out.println("Took: " + (endTime - startTime) + "ms");
+        Classifier classifier = new Classifier(csvEntries, programArgs.getClassifier());
+        classifier.runClassifier();
+        System.out.println("Time elapsed: " + (System.currentTimeMillis() - startTime) + "ms");
 
-        /**
-        startTime = System.currentTimeMillis();
-        Classifier manhattanClassifier = new Classifier(csvEntries, new EuclideanClassifier());
-        manhattanClassifier.runClassifier();
-        endTime = System.currentTimeMillis();
-        System.out.println("Took: " + (endTime - startTime) + "ms");
+    }
 
-        startTime = System.currentTimeMillis();
-        Classifier kMajorityManhattanClassifier = new Classifier(csvEntries, new KMajorityManhattanClassifier(1));
-        kMajorityManhattanClassifier.runClassifier();
-        endTime = System.currentTimeMillis();
-        System.out.println("Took: " + (endTime - startTime) + "ms");
+    public ProgramArgs readProgramArgs(String[] args) {
 
-        startTime = System.currentTimeMillis();
-        Classifier kMajorityEuclideanClassifier = new Classifier(csvEntries, new KMajorityEuclideanClassifier(1));
-        kMajorityEuclideanClassifier.runClassifier();
-        endTime = System.currentTimeMillis();
-        System.out.println("Took: " + (endTime - startTime) + "ms");
-        **/
+        if(args.length != 5) {
+            printHelp();
+            return null;
+        }
+
+        int n;
+        int d;
+        String filename;
+        int k;
+        DistanceType distanceType;
+
+        try {
+
+            n = Integer.parseInt(args[0]); //number of data points to read
+            d = Integer.parseInt(args[1]); //dimensions of data points
+            filename = args[2]; //filename
+            k = Integer.parseInt(args[3]);
+            distanceType = (args[4].equalsIgnoreCase("manhattan")) ? DistanceType.MANHATTAN : DistanceType.EUCLIDEAN;
+
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            System.err.println("Error while reading program arguments! Check inputs please.");
+            return null;
+        }
+
+        IClassifier classifier;
+
+        if(distanceType == DistanceType.MANHATTAN) {
+            if(k == 1) {
+                classifier = new ManhattanClassifier();
+            } else {
+                classifier = new KMajorityManhattanClassifier(k);
+            }
+        } else {
+            if(k == 1) {
+                classifier = new EuclideanClassifier();
+            } else {
+                classifier = new KMajorityEuclideanClassifier(k);
+            }
+        }
+
+        return new ProgramArgs(classifier, n, d, filename);
+    }
+
+    public void printHelp() {
+        System.out.println("Usage: <n> <d> <filename.csv> <k> <distance-metric>");
+        System.out.println("<n> number of data points to be read");
+        System.out.println("<d> dimensionality of data points");
+        System.out.println("<filename.csv> contains the data to be classified (1st line will be ignored)");
+        System.out.println("<k> number of neighbours for majority voting");
+        System.out.println("<distance-metric>: must be \"manhattan\" or \"euclidean\"");
     }
 
 }

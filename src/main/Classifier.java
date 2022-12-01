@@ -33,7 +33,8 @@ public class Classifier {
 
         }
 
-        System.out.println("Done! Correctly classified: " + correctlyClassified + "/" + this.allEntries.length);
+        double percentage = ((double)correctlyClassified / (double)this.allEntries.length) * 100;
+        System.out.println("Done! Correctly classified: " + correctlyClassified + "/" + this.allEntries.length + " (" + percentage + "%)");
 
         return correctlyClassified;
     }

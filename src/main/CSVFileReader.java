@@ -11,8 +11,11 @@ public class CSVFileReader {
 
     private static final String LINE_SEPERATOR = ",";
 
-    public static CSVEntry[] readCSVFile(String filePath, final int maxLines, final int dimensions) {
+    public static CSVEntry[] readCSVFile(ProgramArgs programArgs) {
 
+        final String filePath = programArgs.getFilename();
+        final int maxLines = programArgs.getN();
+        final int dimensions = programArgs.getD();
         CSVEntry[] csvEntries = new CSVEntry[maxLines];
 
         try {
