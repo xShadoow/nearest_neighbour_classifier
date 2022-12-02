@@ -4,7 +4,10 @@ import main.CSVEntry;
 import main.ProgramArgs;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
+import java.util.Arrays;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -15,6 +18,7 @@ public class ClassifierGui {
     private JPanel bottomPanel;
     private JLabel textField;
     private JButton clearButton;
+    private JSlider hardnessSlider;
     private PaintPanel paintPanel;
 
     private final CSVEntry[] csvEntries;
@@ -39,6 +43,8 @@ public class ClassifierGui {
         this.clearButton = new JButton("Clear Canvas");
         this.clearButton.setFont(new Font("Serif", Font.PLAIN, 20));
         this.bottomPanel.add(this.clearButton, BorderLayout.CENTER);
+        this.hardnessSlider = new JSlider(1, 255, 60);
+        this.bottomPanel.add(this.hardnessSlider, BorderLayout.WEST);
         this.mainPanel.add(this.bottomPanel, BorderLayout.SOUTH);
         this.frame.add(this.mainPanel);
         this.frame.setSize(400, 440);
@@ -66,7 +72,8 @@ public class ClassifierGui {
     }
 
     private void initListeners() {
-        this.clearButton.addActionListener(e -> ClassifierGui.this.paintPanel.clearImage());
+        this.clearButton.addActionListener(e -> this.paintPanel.clearImage());
+        this.hardnessSlider.addChangeListener(e -> this.paintPanel.updateHardness(this.hardnessSlider.getValue()));
     }
 
     public void updateClassificationLabel(int newClassification) {

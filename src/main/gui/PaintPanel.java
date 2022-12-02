@@ -16,10 +16,11 @@ public class PaintPanel extends JPanel {
     private static final double SCALE = 12.0D;
     private static final int WINDOW_WIDTH = WIDTH*(int)SCALE;
     private static final int WINDOW_HEIGHT = HEIGHT*(int)SCALE;
-    private static final int DRAW_SIZE = 2;
+    private static final int DRAW_SIZE = 3;
     private BufferedImage image;
-    private int xPos;
-    private int yPos;
+    private int xPos = WIDTH*(int)SCALE+1;
+    private int yPos = HEIGHT*(int)SCALE+1;
+    private int hardness = 40;
 
     public PaintPanel() {
         this.image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
@@ -30,9 +31,13 @@ public class PaintPanel extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = this.image.createGraphics();
-        g2.setColor(new Color(255, 255, 255, 60));
+        g2.setColor(new Color(255, 255, 255, this.hardness));
         g2.fillOval((int)(xPos/SCALE)-1, (int)(yPos/SCALE)-1, DRAW_SIZE, DRAW_SIZE);
         g.drawImage(this.image, 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, null);
+    }
+
+    public void updateHardness(int hardness) {
+        this.hardness = hardness;
     }
 
     public void clearImage() {
@@ -55,7 +60,7 @@ public class PaintPanel extends JPanel {
 
         for(int i = 0; i < pixels.length; i++) {
             Color color = new Color(pixels[i], true);
-            double lum = 0.2126*color.getRed() + 0.7152*color.getGreen() + 0.0722*color.getBlue();
+            double lum = Math.round(0.2126*color.getRed() + 0.7152*color.getGreen() + 0.0722*color.getBlue());
             testData[i] = lum;
         }
 

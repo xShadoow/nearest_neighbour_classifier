@@ -11,7 +11,7 @@ public class Main {
     public Main(String[] args) {
 
         ProgramArgs programArgs = readProgramArgs(args);
-        //ProgramArgs programArgs = new ProgramArgs(new EuclideanClassifier(), 60_000, 28*28, "C://Users//sandr//Downloads//mnist.csv");
+        //programArgs = new ProgramArgs(new EuclideanClassifier(), 70_000, 28*28, "C://Users//sandr//Downloads//mnist.csv");
 
         if(programArgs == null) {
             return;
