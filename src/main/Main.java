@@ -1,6 +1,7 @@
 package main;
 
 import main.classifier.*;
+import main.gui.ClassifierGui;
 
 public class Main {
     public static void main(String[] args) {
@@ -10,18 +11,23 @@ public class Main {
     public Main(String[] args) {
 
         ProgramArgs programArgs = readProgramArgs(args);
+        //ProgramArgs programArgs = new ProgramArgs(new EuclideanClassifier(), 60_000, 28*28, "C://Users//sandr//Downloads//mnist.csv");
 
         if(programArgs == null) {
             return;
         }
 
+        System.out.println("Loading CSV file...");
         final CSVEntry[] csvEntries = CSVFileReader.readCSVFile(programArgs);
+        System.out.println("Opening GUI...");
+        new ClassifierGui(csvEntries, programArgs);
 
+        /**
         long startTime = System.currentTimeMillis();
         Classifier classifier = new Classifier(csvEntries, programArgs.getClassifier());
         classifier.runClassifier();
         System.out.println("Time elapsed: " + (System.currentTimeMillis() - startTime) + "ms");
-
+        **/
     }
 
     public ProgramArgs readProgramArgs(String[] args) {
@@ -71,12 +77,14 @@ public class Main {
     }
 
     public void printHelp() {
+        System.out.println("Warning: Only use this with the mnist dataset! (n should be 40000-70000, d should be 784)");
         System.out.println("Usage: <n> <d> <filename.csv> <k> <distance-metric>");
         System.out.println("<n> number of data points to be read");
         System.out.println("<d> dimensionality of data points");
         System.out.println("<filename.csv> contains the data to be classified (1st line will be ignored)");
         System.out.println("<k> number of neighbours for majority voting");
         System.out.println("<distance-metric>: must be \"manhattan\" or \"euclidean\"");
+        System.out.println("Note: This jar opens a gui in which you can draw your own numbers for the mnist dataset to get classified");
     }
 
 }
